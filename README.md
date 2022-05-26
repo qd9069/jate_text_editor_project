@@ -1,0 +1,1 @@
+# jate_text_editor_project
