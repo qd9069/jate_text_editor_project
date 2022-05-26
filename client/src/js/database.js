@@ -19,7 +19,7 @@ export const putDb = async (content) => {
   const jateDb = await openDB('jate', 1);
   const tx = jateDb.transaction('jate', 'readwrite');
   const store = tx.objectStore('jate');
-  const request = store.put({ jate: content });
+  const request = store.put({ id: 1, jate: content });
   const result = await request;
   console.log('🚀 - data saved to the database', result);
 };
@@ -31,7 +31,7 @@ export const getDb = async () => {
   // Create a connection to the database and version we want to use.
   const jateDb = await openDB('jate', 1);
 
-  // Create a new transaction and specify the database and data privileges.
+  // Create a new transaction and specify the storeName and data privileges.
   const tx = jateDb.transaction('jate', 'readonly');
 
   // Open up the desired object store.
@@ -43,8 +43,10 @@ export const getDb = async () => {
   // Get confirmation of the request.
   const result = await request;
   console.log('result.value', result);
-  return result;
+
+  if (result[0]) {
+    return result[0].jate;
+  }
 };
-// console.error('getDb not implemented');
 
 initdb();
